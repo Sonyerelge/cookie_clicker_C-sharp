@@ -17,7 +17,6 @@
         <Button x:Name="button_fee_bonus" Content="Bonus fées" HorizontalAlignment="Left" Margin="571,292,0,0" VerticalAlignment="Top" Width="105" Height="41" Click="addFairiesBonus"/>
         <Label x:Name="compteur_fees_bonus" Content="0" HorizontalAlignment="Left" Margin="749,300,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_compteur_fees_bonus" Content="x" HorizontalAlignment="Left" Margin="732,300,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelTime" Content="Temps" HorizontalAlignment="Left" Margin="351,31,0,0" VerticalAlignment="Top"/>
         <Button x:Name="button_save_and_quit" Content="Save &amp; quit" HorizontalAlignment="Left" Margin="626,31,0,0" VerticalAlignment="Top" Width="85" Height="35" Click="saveAndQuit"/>
 
     </Grid>

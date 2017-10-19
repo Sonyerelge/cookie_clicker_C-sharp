@@ -21,10 +21,11 @@ namespace FeeClicker
     /// </summary>
     public partial class Game : Window
     {
+        Money money = new Money();
+        Character magicWand = new Character("Baguette magique", 0, 0.2, 1);
+        Character fairy = new Character("Fée", 0, 1, 1);
         private double stars = 0;
-        private double starPerSecond = 0;
-        private int fairies = 0;
-        private int fairiesBonus = 1;
+        private double starsPerSecond = 0;
 
         public Game(Boolean newGame)
         {
@@ -45,19 +46,19 @@ namespace FeeClicker
 
                 String svgFairies = lectureFichierSvg("./savedGame/fairies.txt");
                 if (svgFairies != null)
-                    fairies = Convert.ToInt32(svgFairies);
+                    fairy.setNumber(Convert.ToInt32(svgFairies));
 
-                String svgFairiesBonus = lectureFichierSvg("./savedGame/fairiesBonus.txt");
-                if (svgFairiesBonus != null)
-                    fairiesBonus = Convert.ToInt32(svgFairiesBonus);
+                //String svgFairiesBonus = lectureFichierSvg("./savedGame/fairiesBonus.txt");
+                //if (svgFairiesBonus != null)
+                //    fairiesBonus = Convert.ToInt32(svgFairiesBonus);
 
-                starPerSecond = fairies * fairiesBonus;
+                starsPerSecond = fairy.getStarsPerSecond();
             }
 
             compteur_etoiles.Content = stars;
-            etoiles_seconde.Content = starPerSecond;
-            compteur_fees.Content = fairies;
-            compteur_fees_bonus.Content = fairiesBonus;
+            etoiles_seconde.Content = starsPerSecond;
+            compteur_fees.Content = fairy.getNumber();
+            compteur_fees_bonus.Content = fairy.getMultiplier();
 
             DispatcherTimer timer1MiliSecond = new DispatcherTimer();
             timer1MiliSecond.Interval = TimeSpan.FromSeconds(1 / 1000);
@@ -66,19 +67,19 @@ namespace FeeClicker
 
             DispatcherTimer timer1second = new DispatcherTimer();
             timer1second.Interval = TimeSpan.FromSeconds(1);
-            timer1second.Tick += timer_Tick;
             timer1second.Tick += checkWhatWeCanBuy;
             timer1second.Start();
-        }
 
-        void timer_Tick(object sender, EventArgs e)
-        {
-            labelTime.Content = DateTime.Now.ToLongTimeString();
+            money.setMoney(new int[] { 0, 234, 654, 32, 10, 654 });
+            etoiles_seconde.Content = money.writeMoney();
+
+            magicWand.setMoney(new int[] { 0, 0, 0, 0, 0, 10 });
+            fairy.setMoney(new int[] { 0, 0, 0, 0, 0, 100 });
         }
 
         void addStarSecond(object sender, EventArgs e)
         {
-            stars += starPerSecond / 1000;
+            stars += starsPerSecond / 1000;
             compteur_etoiles.Content = stars;
         }
 
@@ -95,23 +96,23 @@ namespace FeeClicker
 
         private void addFairy(object sender, RoutedEventArgs e)
         {
-            fairies++;
-            compteur_fees.Content = fairies;
+            fairy.addOne();
+            compteur_fees.Content = fairy.getNumber();
             updateStarPerSecond();
 
         }
 
         private void addFairiesBonus(object sender, RoutedEventArgs e)
         {
-            fairiesBonus *= 2;
-            compteur_fees_bonus.Content = fairiesBonus;
-            updateStarPerSecond();
+            //fairiesBonus *= 2;
+            //compteur_fees_bonus.Content = fairiesBonus;
+            //updateStarPerSecond();
         }
 
         private void updateStarPerSecond()
         {
-            starPerSecond = (fairies * fairiesBonus);
-            etoiles_seconde.Content = starPerSecond;
+            starsPerSecond = fairy.getStarsPerSecond();
+            etoiles_seconde.Content = starsPerSecond;
         }
 
 
@@ -223,8 +224,8 @@ namespace FeeClicker
         private void saveAndQuit(object sender, RoutedEventArgs e)
         {
             ecritureFichier("./savedGame/stars.txt", Convert.ToString(stars));
-            ecritureFichier("./savedGame/fairies.txt", Convert.ToString(fairies));
-            ecritureFichier("./savedGame/fairiesBonus.txt", Convert.ToString(fairiesBonus));
+            ecritureFichier("./savedGame/fairies.txt", Convert.ToString(fairy.getNumber()));
+            ecritureFichier("./savedGame/fairiesBonus.txt", Convert.ToString(fairy.getMultiplier()));
 
             Application.Current.Shutdown();
         }
