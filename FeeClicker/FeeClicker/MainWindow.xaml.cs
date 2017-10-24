@@ -30,6 +30,10 @@ namespace FeeClicker
             //this.tototo.Content = momo.writeMoney();
             //momo.setMoney(new int[] { 0, 234, 654, 32, 10, 654 });
             //this.tututu.Content = momo.writeMoney();
+
+            //ImageBrush ima = new ImageBrush();
+            //ima.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/image.png", UriKind.Absolute));
+            //this.Background = ima;
         }
 
         private void startSavedGame(object sender, RoutedEventArgs e)

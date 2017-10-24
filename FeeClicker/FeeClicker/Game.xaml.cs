@@ -22,8 +22,8 @@ namespace FeeClicker
     public partial class Game : Window
     {
         Money money = new Money();
-        Character magicWand = new Character("Baguette magique", 0, 0.2, 1);
-        Character fairy = new Character("Fée", 0, 1, 1);
+        Character magicWand = new Character("Baguette magique", 0, 1, 1);
+        Character fairy = new Character("Fée", 0, 5, 1);
         private double stars = 0;
         private double starsPerSecond = 0;
 
