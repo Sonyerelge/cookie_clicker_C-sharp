@@ -8,7 +8,7 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="Resources/image.png"/>
+            <ImageBrush ImageSource="Resources/background_star.png"/>
         </Grid.Background>
         <Label Content="Fée clicker" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Height="68" Width="194" FontSize="36"/>
         <Button Content="Continuer partie" HorizontalAlignment="Left" Margin="190,102,0,0" VerticalAlignment="Top" Width="123" Height="47" Click="startSavedGame"/>

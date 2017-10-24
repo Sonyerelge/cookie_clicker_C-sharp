@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="Game" Height="500" Width="850">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/background_star.png"/>
+        </Grid.Background>
         <Button x:Name="button_etoiles" Content="Poussières d'étoile" HorizontalAlignment="Left" Margin="94,185,0,0" VerticalAlignment="Top" Width="136" Height="72" Click="addStar"/>
         <Label x:Name="label_compteur_etoiles" Content="Etoiles" HorizontalAlignment="Left" Margin="55,74,0,0" VerticalAlignment="Top"/>
         <Label x:Name="compteur_etoiles" Content="0" HorizontalAlignment="Left" Margin="213,74,0,0" VerticalAlignment="Top"/>
