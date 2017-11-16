@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace FeeClicker
 {
@@ -23,13 +10,6 @@ namespace FeeClicker
         public MainWindow()
         {
             InitializeComponent();
-
-            //Money momo = new Money();
-            //this.tatata.Content = momo.writeMoney();
-            //momo.setMoney(new int[] { 0, 0, 0, 0, 132, 766});
-            //this.tototo.Content = momo.writeMoney();
-            //momo.setMoney(new int[] { 0, 234, 654, 32, 10, 654 });
-            //this.tututu.Content = momo.writeMoney();
         }
 
         private void startSavedGame(object sender, RoutedEventArgs e)

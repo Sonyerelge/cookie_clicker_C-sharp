@@ -1,25 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FeeClicker
 {
     class Character
     {
         private String name;
-        private int number;
-        private double coefficient;
-        private int multiplier;
-        Money money = new Money();
+        private uint number;
+        private uint coefficient;
+        private uint multiplier;
+        private ulong price;
 
-        public Character(String name, int number, double coefficient, int multiplier)
+        public Character(String name, uint number, uint coefficient, uint multiplier, ulong price)
         {
             this.name = name;
             this.number = number;
             this.coefficient = coefficient;
             this.multiplier = multiplier;
+            this.price = price;
         }
         
         public String getName()
@@ -27,7 +24,7 @@ namespace FeeClicker
             return this.name;
         }
 
-        public int getNumber()
+        public uint getNumber()
         {
             return this.number;
         }
@@ -37,30 +34,25 @@ namespace FeeClicker
             return this.coefficient;
         }
 
-        public int getMultiplier()
+        public uint getMultiplier()
         {
             return this.multiplier;
         }
 
-        public void setNumber(int number)
+        public void setNumber(uint number)
         {
             this.number = number;
         }
 
-        public double getStarsPerSecond()
+        public UInt64 getStarsPerSecond()
         {
-            return this.number * this.coefficient * this.multiplier;
+            return this.number * this.coefficient;
         }
 
         public void addOne()
         {
             this.number++;
+            this.price += 10;
         }
-
-        public void setMoney(int[] money)
-        {
-            this.money.setMoney(money);
-        }
-
     }
 }

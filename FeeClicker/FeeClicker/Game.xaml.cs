@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace FeeClicker
@@ -21,11 +10,10 @@ namespace FeeClicker
     /// </summary>
     public partial class Game : Window
     {
-        Money money = new Money();
-        Character magicWand = new Character("Baguette magique", 0, 1, 1);
-        Character fairy = new Character("Fée", 0, 5, 1);
-        private double stars = 0;
-        private double starsPerSecond = 0;
+        private ulong stars = 0;
+        private ulong starsPerSecond = 0;
+        private Character magicWand = new Character("Baguette magique", 0, 1, 1, 10);
+        private Character fairy = new Character("Fée", 0, 10000, 1, 100);
 
         public Game(Boolean newGame)
         {
@@ -33,24 +21,18 @@ namespace FeeClicker
             if (newGame)
             {
                 //Vider les fichiers textes
-                ecritureFichier("./savedGame/stars.txt", "0");
-                ecritureFichier("./savedGame/fairies.txt", "0");
-                ecritureFichier("./savedGame/fairiesBonus.txt", "1");
+                writeFile("./savedGame/stars.txt", "0");
+                writeFile("./savedGame/fairies.txt", "0");
             }
             else
             {
                 //Récupérer les valeurs des fichiers textes
-                String svgStars = lectureFichierSvg("./savedGame/stars.txt");
+                String svgStars = readFile("./savedGame/stars.txt");
+                String svgFairies = readFile("./savedGame/fairies.txt");
                 if (svgStars != null)
-                    stars = Convert.ToDouble(svgStars);
-
-                String svgFairies = lectureFichierSvg("./savedGame/fairies.txt");
+                    stars = Convert.ToUInt64(svgStars);
                 if (svgFairies != null)
-                    fairy.setNumber(Convert.ToInt32(svgFairies));
-
-                //String svgFairiesBonus = lectureFichierSvg("./savedGame/fairiesBonus.txt");
-                //if (svgFairiesBonus != null)
-                //    fairiesBonus = Convert.ToInt32(svgFairiesBonus);
+                    fairy.setNumber(Convert.ToUInt32(svgFairies));
 
                 starsPerSecond = fairy.getStarsPerSecond();
             }
@@ -58,29 +40,33 @@ namespace FeeClicker
             compteur_etoiles.Content = stars;
             etoiles_seconde.Content = starsPerSecond;
             compteur_fees.Content = fairy.getNumber();
-            compteur_fees_bonus.Content = fairy.getMultiplier();
-
-            DispatcherTimer timer1MiliSecond = new DispatcherTimer();
-            timer1MiliSecond.Interval = TimeSpan.FromSeconds(1 / 1000);
-            timer1MiliSecond.Tick += addStarSecond;
-            timer1MiliSecond.Start();
 
             DispatcherTimer timer1second = new DispatcherTimer();
             timer1second.Interval = TimeSpan.FromSeconds(1);
             timer1second.Tick += checkWhatWeCanBuy;
+            timer1second.Tick += addStarsSecond;
             timer1second.Start();
-
-            money.setMoney(new int[] { 0, 234, 654, 32, 10, 654 });
-            etoiles_seconde.Content = money.writeMoney();
-
-            magicWand.setMoney(new int[] { 0, 0, 0, 0, 0, 10 });
-            fairy.setMoney(new int[] { 0, 0, 0, 0, 0, 100 });
         }
 
-        void addStarSecond(object sender, EventArgs e)
+        private void addStar(object sender, RoutedEventArgs e)
         {
-            stars += starsPerSecond / 1000;
-            compteur_etoiles.Content = stars;
+            stars++;
+            //compteur_etoiles.Content = stars;
+            compteur_etoiles.Content = this.convertMoneyToString(stars);
+        }
+
+        void addStarsSecond(object sender, EventArgs e)
+        {
+            stars += starsPerSecond;
+            //compteur_etoiles.Content = stars;
+            compteur_etoiles.Content = stars + " - " + this.convertMoneyToString(stars);
+        }
+
+        private void buyFairy(object sender, RoutedEventArgs e)
+        {
+            fairy.addOne();
+            compteur_fees.Content = fairy.getNumber();
+            updateStarPerSecond();
         }
 
         void checkWhatWeCanBuy(object sender, EventArgs e)
@@ -88,36 +74,28 @@ namespace FeeClicker
 
         }
 
-        private void addStar(object sender, RoutedEventArgs e)
+        public string convertMoneyToString(ulong num)
         {
-            stars++;
-            compteur_etoiles.Content = stars;
+            if (num < 1000)
+                return num.ToString();
+            if (num >= 1000 && num < 1000000)
+                return (Math.Round(Convert.ToDecimal(num), 1)).ToString();
+                //return (Math.Round(Convert.ToDecimal(num) / 1000, 1)).ToString();
+            if (num >= 1000000 && num < 1000000000)
+                return (Math.Round(Convert.ToDecimal(num) / 1000, 1)).ToString() + " million";
+            if (num >= 1000000000 && num < 1000000000000)
+                return (Math.Round(Convert.ToDecimal(num) / 1000000, 1)).ToString() + " milliard";
+            if (num >= 1000000000000 && num < 1000000000000000)
+                return (Math.Round(Convert.ToDecimal(num) / 1000000000, 1)).ToString() + " billion";
+            if (num >= 1000000000000000 && num < 1000000000000000000)
+                return (Math.Round(Convert.ToDecimal(num) / 1000000000000, 1)).ToString() + " billiard";
+            if (num >= 1000000000000000000)
+                return (Math.Round(Convert.ToDecimal(num) / 1000000000000000, 1)).ToString() + " trillion";
+            else
+                return "NaN";
         }
 
-        private void addFairy(object sender, RoutedEventArgs e)
-        {
-            fairy.addOne();
-            compteur_fees.Content = fairy.getNumber();
-            updateStarPerSecond();
-
-        }
-
-        private void addFairiesBonus(object sender, RoutedEventArgs e)
-        {
-            //fairiesBonus *= 2;
-            //compteur_fees_bonus.Content = fairiesBonus;
-            //updateStarPerSecond();
-        }
-
-        private void updateStarPerSecond()
-        {
-            starsPerSecond = fairy.getStarsPerSecond();
-            etoiles_seconde.Content = starsPerSecond;
-        }
-
-
-
-        public string lectureFichierSvg(string fichier)
+        public string readFile(string fichier)
         {
             try
             {
@@ -143,37 +121,21 @@ namespace FeeClicker
             }
         }
 
-
-        public void lectureFichier(string fichier)
+        private void saveAndQuit(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                // Création d'une instance de StreamReader pour permettre la lecture de notre fichier 
-                //StreamReader monStreamReader = new StreamReader(Server.MapPath(fichier));
-                StreamReader monStreamReader = new StreamReader(fichier);
-                string ligne = monStreamReader.ReadLine();
+            writeFile("./savedGame/stars.txt", Convert.ToString(stars));
+            writeFile("./savedGame/fairies.txt", Convert.ToString(fairy.getNumber()));
 
-                // Lecture de toutes les lignes et affichage de chacune sur la page 
-                while (ligne != null)
-                {
-                    compteur_fees_bonus.Content = ligne;
-                    Console.WriteLine(ligne);
-                    Console.WriteLine("</br>");
-                    ligne = monStreamReader.ReadLine();
-                }
-                // Fermeture du StreamReader (attention très important) 
-                monStreamReader.Close();
-            }
-            catch (Exception ex)
-            {
-                // Code exécuté en cas d'exception 
-                Console.WriteLine("Une erreur est survenue au cours de la lecture !");
-                Console.WriteLine("</br>");
-                Console.WriteLine(ex.Message);
-            }
+            Application.Current.Shutdown();
         }
 
-        public void ecritureFichier(string fichier, String chaine)
+        private void updateStarPerSecond()
+        {
+            starsPerSecond = fairy.getStarsPerSecond();
+            etoiles_seconde.Content = starsPerSecond;
+        }
+
+        public void writeFile(string fichier, String chaine)
         {
             try
             {
@@ -192,42 +154,10 @@ namespace FeeClicker
             catch (Exception ex)
             {
                 // Code exécuté en cas d'exception 
+                Console.WriteLine("Une erreur est survenue au cours de l'écriture !");
+                Console.WriteLine("</br>");
                 Console.WriteLine(ex.Message);
             }
-        }
-
-        public void ecritureFichierV2(string fichier)
-        {
-            try
-            {
-                // Instanciation du StreamWriter avec passage du nom du fichier 
-                StreamWriter monStreamWriter = new StreamWriter(fichier);
-                // ou bien 
-                // StreamWriter monStreamWriter = new StreamWriter(Server.MapPath("./") + "admin\\logs\\" + fichier); 
-
-                //Ecriture du texte dans votre fichier 
-                monStreamWriter.WriteLine("Ma toute première ligne ...");
-                monStreamWriter.WriteLine("Ma seconde ligne ...");
-                monStreamWriter.WriteLine("Ma troisième ligne ...");
-
-                // Fermeture du StreamWriter (Très important) 
-                monStreamWriter.Close();
-            }
-            catch (Exception ex)
-            {
-                // Code exécuté en cas d'exception
-                compteur_fees_bonus.Content = "Ca marche pas !!";
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        private void saveAndQuit(object sender, RoutedEventArgs e)
-        {
-            ecritureFichier("./savedGame/stars.txt", Convert.ToString(stars));
-            ecritureFichier("./savedGame/fairies.txt", Convert.ToString(fairy.getNumber()));
-            ecritureFichier("./savedGame/fairiesBonus.txt", Convert.ToString(fairy.getMultiplier()));
-
-            Application.Current.Shutdown();
         }
     }
 }
