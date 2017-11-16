@@ -5,11 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeeClicker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="450" Width="800" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" MaxWidth="800" MaxHeight="450">
     <Grid>
-        <Label Content="Fée clicker" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Height="68" Width="194" FontSize="36"/>
-        <Button Content="Continuer partie" HorizontalAlignment="Left" Margin="190,102,0,0" VerticalAlignment="Top" Width="123" Height="47" Click="startSavedGame"/>
-        <Button Content="Nouvelle partie" HorizontalAlignment="Left" Margin="190,192,0,0" VerticalAlignment="Top" Width="123" Height="47" Click="startNewGame"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/background_star.png"/>
+        </Grid.Background>
+        <Label x:Name="label_title" Content="Fée clicker" HorizontalAlignment="Left" Margin="221,12,0,0" VerticalAlignment="Top" Height="106" Width="347" FontSize="72" Background="{x:Null}" Foreground="#FF5F153A" FontFamily="Yu Gothic Light"/>
+        <Button x:Name="button_startSavedGame" Content="Continuer partie" VerticalAlignment="Center" Height="63" Click="startSavedGame" HorizontalAlignment="Center" Width="153" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="327,150,312,206" Background="#FF5F153A"/>
+        <Button x:Name="button_startNewGame" Content="Nouvelle partie" HorizontalAlignment="Left" Margin="327,252,0,0" VerticalAlignment="Top" Width="153" Height="63" Click="startNewGame" Background="#FF5F153A"/>
+        <Button x:Name="button_credits" Content="Crédits" HorizontalAlignment="Left" Margin="639,333,0,0" VerticalAlignment="Top" Width="123" Height="47" Background="#FF5F153A" Click="showOrHideCredit"/>
+        <Image x:Name="image_LogoFee" HorizontalAlignment="Left" Height="100" Margin="10,309,0,0" VerticalAlignment="Top" Width="76" Source="Resources/logoFée.png"/>
+        <Label x:Name="label_credits" Content="Crédits : &#xD;&#xA;&#xD;&#xA;Constant Bouquet&#xD;&#xA;Quentin Marescaux&#xD;&#xA;Geoffrey Sautieres&#xD;&#xA;&#xD;&#xA;Etudiant 3ème année Centrale Lille - IG2I&#xD;&#xA;&#xD;&#xA;pour un chalenge Let's Dev&#xD;&#xA;&#xD;&#xA;2017" HorizontalAlignment="Left" Margin="164,123,0,0" VerticalAlignment="Top" Height="281" Width="490" Background="{x:Null}" Foreground="#FF5F153A" FontSize="20" Visibility="Hidden"/>
 
     </Grid>
 </Window>

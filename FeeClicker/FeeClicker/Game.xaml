@@ -5,16 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeeClicker"
         mc:Ignorable="d"
-        Title="Game" Height="500" Width="850">
+        Title="Féé clicker" Height="720" Width="1280" Background="{x:Null}" MinWidth="1280" MinHeight="720" Margin="0" ResizeMode="NoResize" ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="1280" MaxHeight="720" HorizontalAlignment="Left" VerticalAlignment="Top" Icon="Resources/star.png" WindowStartupLocation="CenterOwner">
     <Grid>
-        <Button x:Name="button_etoiles" Content="Poussières d'étoile" HorizontalAlignment="Left" Margin="94,185,0,0" VerticalAlignment="Top" Width="136" Height="72" Click="addStar"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="201*"/>
+            <ColumnDefinition Width="220*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/background_star.png"/>
+        </Grid.Background>
+        <Button x:Name="button_etoiles" Click="addStar" Margin="134,274,144,95">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/star.png"/>
+            </Button.Background>
+        </Button>
         <Label x:Name="label_compteur_etoiles" Content="Etoiles" HorizontalAlignment="Left" Margin="55,74,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="compteur_etoiles" Content="0" HorizontalAlignment="Left" Margin="213,74,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="compteur_fees" Content="0" HorizontalAlignment="Left" Margin="728,144,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button_fee" Content="Ajouter fée" HorizontalAlignment="Left" Margin="571,129,0,0" VerticalAlignment="Top" Width="105" Height="41" Click="buyFairy"/>
-        <Label x:Name="label_etoiles_seconde" Content="Etoiles par seconde" HorizontalAlignment="Left" Margin="55,111,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="etoiles_seconde" Content="0" HorizontalAlignment="Left" Margin="213,111,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button_save_and_quit" Content="Save &amp; quit" HorizontalAlignment="Left" Margin="626,31,0,0" VerticalAlignment="Top" Width="85" Height="35" Click="saveAndQuit"/>
+        <Label x:Name="compteur_etoiles" Content="0" HorizontalAlignment="Left" Margin="348,139,0,0" VerticalAlignment="Top" Background="{x:Null}" Width="143" Foreground="#FF5F153A" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold"/>
+        <Label x:Name="compteur_fees" Content="0" HorizontalAlignment="Left" Margin="326,144,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Button x:Name="button_fee" Content="Ajouter fée" HorizontalAlignment="Left" Margin="280,274,0,0" VerticalAlignment="Top" Width="105" Height="42" Click="addFairy" Grid.Column="1"/>
+        <Label x:Name="label_etoiles_seconde" Content="Etoiles par seconde" HorizontalAlignment="Left" Margin="90,178,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FF5F153A" FontWeight="Bold" FontSize="20"/>
+        <Label x:Name="etoiles_seconde" Content="0" HorizontalAlignment="Left" Margin="425,171,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FF5F153A" Width="66" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold"/>
+        <Button x:Name="button_fee_bonus" Content="Bonus fées" HorizontalAlignment="Left" Margin="280,396,0,0" VerticalAlignment="Top" Width="105" Height="40" Click="addFairiesBonus" Grid.Column="1"/>
+        <Label x:Name="compteur_fees_bonus" Content="0" HorizontalAlignment="Left" Margin="347,300,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="label_compteur_fees_bonus" Content="x" HorizontalAlignment="Left" Margin="330,300,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Button x:Name="button_save_and_quit" Content="Save &amp; quit" HorizontalAlignment="Left" Margin="526,41,0,0" VerticalAlignment="Top" Width="84" Height="35" Click="saveAndQuit" Grid.Column="1"/>
+        <Label x:Name="label_etoiles_seconde_Copy" Content="Etoiles récoltées" HorizontalAlignment="Left" Margin="90,136,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FF5F153A" FontWeight="Bold" FontSize="20"/>
+        <Label x:Name="label_title" Content="Fée clicker" HorizontalAlignment="Left" Margin="436,7,0,0" VerticalAlignment="Top" Height="106" Width="347" FontSize="72" Background="{x:Null}" Foreground="#FF5F153A" FontFamily="Yu Gothic Light" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>
