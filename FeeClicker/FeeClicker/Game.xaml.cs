@@ -226,8 +226,7 @@ namespace FeeClicker
             ecritureFichier("./savedGame/stars.txt", Convert.ToString(stars));
             ecritureFichier("./savedGame/fairies.txt", Convert.ToString(fairy.getNumber()));
             ecritureFichier("./savedGame/fairiesBonus.txt", Convert.ToString(fairy.getMultiplier()));
-
-            Application.Current.Shutdown();
+            this.Close();
         }
     }
 }
