@@ -8,6 +8,7 @@ namespace FeeClicker
         private uint number;
         private uint coefficient;
         private uint multiplier;
+        private ulong defaultPrice;
         private ulong price;
 
         public Character(String name, uint number, uint coefficient, uint multiplier, ulong price)
@@ -17,6 +18,7 @@ namespace FeeClicker
             this.coefficient = coefficient;
             this.multiplier = multiplier;
             this.price = price;
+            this.defaultPrice = price;
         }
         
         public String getName()
@@ -29,7 +31,7 @@ namespace FeeClicker
             return this.number;
         }
 
-        public double getCoefficient()
+        public uint getCoefficient()
         {
             return this.coefficient;
         }
@@ -37,6 +39,11 @@ namespace FeeClicker
         public uint getMultiplier()
         {
             return this.multiplier;
+        }
+
+        public UInt64 getPrice()
+        {
+            return this.price;
         }
 
         public void setNumber(uint number)
@@ -52,7 +59,7 @@ namespace FeeClicker
         public void addOne()
         {
             this.number++;
-            this.price += 10;
+            this.price += 1;
         }
     }
 }

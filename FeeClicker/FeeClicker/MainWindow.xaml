@@ -18,7 +18,7 @@
         <Button x:Name="button_startNewGame" Content="Nouvelle partie" HorizontalAlignment="Left" Margin="327,252,0,0" VerticalAlignment="Top" Width="153" Height="63" Click="startNewGame" Background="#FF5F153A"/>
         <Button x:Name="button_credits" Content="Crédits" HorizontalAlignment="Left" Margin="639,333,0,0" VerticalAlignment="Top" Width="123" Height="47" Background="#FF5F153A" Click="showOrHideCredit"/>
         <Image x:Name="image_LogoFee" HorizontalAlignment="Left" Height="100" Margin="10,309,0,0" VerticalAlignment="Top" Width="76" Source="Resources/logoFée.png"/>
-        <Label x:Name="label_credits" Content="Crédits : &#xD;&#xA;&#xD;&#xA;Constant Bouquet&#xD;&#xA;Quentin Marescaux&#xD;&#xA;Geoffrey Sautieres&#xD;&#xA;&#xD;&#xA;Etudiant 3ème année Centrale Lille - IG2I&#xD;&#xA;&#xD;&#xA;pour un chalenge Let's Dev&#xD;&#xA;&#xD;&#xA;2017" HorizontalAlignment="Left" Margin="164,123,0,0" VerticalAlignment="Top" Height="281" Width="490" Background="{x:Null}" Foreground="#FF5F153A" FontSize="20" Visibility="Hidden"/>
+        <Label x:Name="label_credits" Content="Crédits : &#xD;&#xA;&#xD;&#xA;Constant Bouquet&#xD;&#xA;Quentin Marescaux&#xD;&#xA;Geoffrey Sautieres&#xD;&#xA;&#xD;&#xA;Etudiants 3ème année Centrale Lille - IG2I&#xD;&#xA;&#xD;&#xA;Pour un chalenge Let's Dev&#xD;&#xA;&#xD;&#xA;2017" HorizontalAlignment="Left" Margin="164,123,0,0" VerticalAlignment="Top" Height="281" Width="490" Background="{x:Null}" Foreground="#FF5F153A" FontSize="20" Visibility="Hidden"/>
 
     </Grid>
 </Window>

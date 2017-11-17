@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace FeeClicker
@@ -21,11 +10,11 @@ namespace FeeClicker
     /// </summary>
     public partial class Game : Window
     {
-        Money money = new Money();
-        Character magicWand = new Character("Baguette magique", 0, 1, 1);
-        Character fairy = new Character("Fée", 0, 5, 1);
-        private double stars = 0;
-        private double starsPerSecond = 0;
+        private Character magicWands = new Character("Baguettes magiques", 0, 1, 1, 20);
+        private Character fairies = new Character("Fées", 0, 5, 1, 100);
+        private Character farms = new Character("Fermes", 0, 20, 1, 500);
+        private ulong stars = 0;
+        private ulong starsPerSecond = 0;
 
         public Game(Boolean newGame)
         {
@@ -42,79 +31,136 @@ namespace FeeClicker
                 //Récupérer les valeurs des fichiers textes
                 String svgStars = lectureFichierSvg("./savedGame/stars.txt");
                 if (svgStars != null)
-                    stars = Convert.ToDouble(svgStars);
+                    stars = Convert.ToUInt64(svgStars);
 
                 String svgFairies = lectureFichierSvg("./savedGame/fairies.txt");
                 if (svgFairies != null)
-                    fairy.setNumber(Convert.ToInt32(svgFairies));
+                    fairies.setNumber(Convert.ToUInt32(svgFairies));
 
-                //String svgFairiesBonus = lectureFichierSvg("./savedGame/fairiesBonus.txt");
-                //if (svgFairiesBonus != null)
-                //    fairiesBonus = Convert.ToInt32(svgFairiesBonus);
-
-                starsPerSecond = fairy.getStarsPerSecond();
+                starsPerSecond = magicWands.getStarsPerSecond();
+                starsPerSecond += fairies.getStarsPerSecond();
+                starsPerSecond += farms.getStarsPerSecond();
             }
 
-            compteur_etoiles.Content = stars;
-            etoiles_seconde.Content = starsPerSecond;
-            compteur_fees.Content = fairy.getNumber();
-            compteur_fees_bonus.Content = fairy.getMultiplier();
+            label_starsCounter.Content = stars;
+            label_starsPerSecondCounter.Content = starsPerSecond;
 
-            DispatcherTimer timer1MiliSecond = new DispatcherTimer();
-            timer1MiliSecond.Interval = TimeSpan.FromSeconds(1 / 1000);
-            timer1MiliSecond.Tick += addStarSecond;
-            timer1MiliSecond.Start();
+            label_magicWands.Content = magicWands.getNumber();
+            label_fairies.Content = fairies.getNumber();
+            label_farms.Content = farms.getNumber();
+
+            label_magicWandPrice.Content = magicWands.getPrice();
+            label_fairyPrice.Content = fairies.getPrice();
+            label_farmPrice.Content = farms.getPrice();
 
             DispatcherTimer timer1second = new DispatcherTimer();
             timer1second.Interval = TimeSpan.FromSeconds(1);
+            timer1second.Tick += addStarsPerSecond;
             timer1second.Tick += checkWhatWeCanBuy;
             timer1second.Start();
-
-            money.setMoney(new int[] { 0, 234, 654, 32, 10, 654 });
-            etoiles_seconde.Content = money.writeMoney();
-
-            magicWand.setMoney(new int[] { 0, 0, 0, 0, 0, 10 });
-            fairy.setMoney(new int[] { 0, 0, 0, 0, 0, 100 });
         }
 
-        void addStarSecond(object sender, EventArgs e)
+        void addStarsPerSecond(object sender, EventArgs e)
         {
-            stars += starsPerSecond / 1000;
-            compteur_etoiles.Content = stars;
+            stars += starsPerSecond;
+            label_starsCounter.Content = stars;
         }
 
         void checkWhatWeCanBuy(object sender, EventArgs e)
         {
-
+            if (stars >= magicWands.getPrice())
+            {
+                button_addMagicWand.IsEnabled = true;
+            }
+            else
+            {
+                button_addMagicWand.IsEnabled = false;
+            }
+            if (stars >= fairies.getPrice())
+            {
+                button_addFairy.IsEnabled = true;
+            }
+            else
+            {
+                button_addFairy.IsEnabled = false;
+            }
+            if (stars >= farms.getPrice())
+            {
+                button_addFarm.IsEnabled = true;
+            }
+            else
+            {
+                button_addFarm.IsEnabled = false;
+            }
         }
 
         private void addStar(object sender, RoutedEventArgs e)
         {
             stars++;
-            compteur_etoiles.Content = stars;
+            label_starsCounter.Content = stars;
+        }
+
+        private void addMagicWand(object sender, RoutedEventArgs e)
+        {
+            stars -= magicWands.getPrice();
+            magicWands.addOne();
+            if (stars >= magicWands.getPrice())
+            {
+                button_addMagicWand.IsEnabled = true;
+            }
+            else
+            {
+                button_addMagicWand.IsEnabled = false;
+            }
+            label_magicWands.Content = magicWands.getNumber();
+            label_magicWandPrice.Content = magicWands.getPrice();
+            label_starsCounter.Content = stars;
+            updateStarsPerSecond();
         }
 
         private void addFairy(object sender, RoutedEventArgs e)
         {
-            fairy.addOne();
-            compteur_fees.Content = fairy.getNumber();
-            updateStarPerSecond();
-
+            stars -= fairies.getPrice();
+            fairies.addOne();
+            if (stars >= fairies.getPrice())
+            {
+                button_addFairy.IsEnabled = true;
+            }
+            else
+            {
+                button_addFairy.IsEnabled = false;
+            }
+            label_fairies.Content = fairies.getNumber();
+            label_fairyPrice.Content = fairies.getPrice();
+            label_starsCounter.Content = stars;
+            updateStarsPerSecond();
         }
 
-        private void addFairiesBonus(object sender, RoutedEventArgs e)
+        private void addFarm(object sender, RoutedEventArgs e)
         {
-            //fairiesBonus *= 2;
-            //compteur_fees_bonus.Content = fairiesBonus;
-            //updateStarPerSecond();
+            stars -= farms.getPrice();
+            farms.addOne();
+            if (stars >= farms.getPrice())
+            {
+                button_addFarm.IsEnabled = true;
+            }
+            else
+            {
+                button_addFarm.IsEnabled = false;
+            }
+            label_farms.Content = farms.getNumber();
+            label_farmPrice.Content = farms.getPrice();
+            label_starsCounter.Content = stars;
+            updateStarsPerSecond();
         }
 
-        private void updateStarPerSecond()
+        private void updateStarsPerSecond()
         {
-            starsPerSecond = fairy.getStarsPerSecond();
-            etoiles_seconde.Content = starsPerSecond;
+            starsPerSecond = magicWands.getStarsPerSecond();
+            starsPerSecond += fairies.getStarsPerSecond();
+            starsPerSecond += farms.getStarsPerSecond();
+            label_starsPerSecondCounter.Content = starsPerSecond;
         }
-
 
 
         public string lectureFichierSvg(string fichier)
@@ -156,7 +202,6 @@ namespace FeeClicker
                 // Lecture de toutes les lignes et affichage de chacune sur la page 
                 while (ligne != null)
                 {
-                    compteur_fees_bonus.Content = ligne;
                     Console.WriteLine(ligne);
                     Console.WriteLine("</br>");
                     ligne = monStreamReader.ReadLine();
@@ -216,7 +261,6 @@ namespace FeeClicker
             catch (Exception ex)
             {
                 // Code exécuté en cas d'exception
-                compteur_fees_bonus.Content = "Ca marche pas !!";
                 Console.WriteLine(ex.Message);
             }
         }
@@ -224,8 +268,8 @@ namespace FeeClicker
         private void saveAndQuit(object sender, RoutedEventArgs e)
         {
             ecritureFichier("./savedGame/stars.txt", Convert.ToString(stars));
-            ecritureFichier("./savedGame/fairies.txt", Convert.ToString(fairy.getNumber()));
-            ecritureFichier("./savedGame/fairiesBonus.txt", Convert.ToString(fairy.getMultiplier()));
+            ecritureFichier("./savedGame/fairies.txt", Convert.ToString(fairies.getNumber()));
+            ecritureFichier("./savedGame/fairiesBonus.txt", Convert.ToString(fairies.getMultiplier()));
             this.Close();
         }
     }
