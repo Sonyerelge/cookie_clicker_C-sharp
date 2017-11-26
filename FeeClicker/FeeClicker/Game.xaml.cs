@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace FeeClicker
@@ -10,15 +13,19 @@ namespace FeeClicker
     /// </summary>
     public partial class Game : Window
     {
-        private Character magicWands = new Character("Baguettes magiques", 0, 1, 1, 20);
-        private Character fairies = new Character("Fées", 0, 5, 1, 100);
-        private Character farms = new Character("Fermes", 0, 20, 1, 500);
         private ulong stars = 0;
         private ulong starsPerSecond = 0;
+        private List<Character> listCharacters= new List<Character>();
 
         public Game(Boolean newGame)
         {
             InitializeComponent();
+
+            listCharacters.Add(new Character("Baguette magique", 0, 1, 1, 20));
+            listCharacters.Add(new Character("Fée", 0, 5, 1, 100));
+            listCharacters.Add(new Character("Ferme", 0, 20, 1, 500));
+
+            /*
             if (newGame)
             {
                 //Vider les fichiers textes
@@ -41,17 +48,26 @@ namespace FeeClicker
                 starsPerSecond += fairies.getStarsPerSecond();
                 starsPerSecond += farms.getStarsPerSecond();
             }
+            */
 
             label_starsCounter.Content = stars;
             label_starsPerSecondCounter.Content = starsPerSecond;
 
-            label_magicWands.Content = magicWands.getNumber();
-            label_fairies.Content = fairies.getNumber();
-            label_farms.Content = farms.getNumber();
+            int numero = 1;
+            Button btn;
+            Label lbl;
+            foreach(Character character in listCharacters)
+            {
+                btn = FindName("button_addCharacter_" + numero) as Button;
+                btn.Content = "Ajouter " + character.getName();
 
-            label_magicWandPrice.Content = magicWands.getPrice();
-            label_fairyPrice.Content = fairies.getPrice();
-            label_farmPrice.Content = farms.getPrice();
+                lbl = FindName("label_character_" + numero) as Label;
+                lbl.Content = character.getNumber();
+
+                lbl = FindName("label_characterPrice_" + numero) as Label;
+                lbl.Content = character.getPrice();
+                numero++;
+            }
 
             DispatcherTimer timer1second = new DispatcherTimer();
             timer1second.Interval = TimeSpan.FromSeconds(1);
@@ -68,29 +84,20 @@ namespace FeeClicker
 
         void checkWhatWeCanBuy(object sender, EventArgs e)
         {
-            if (stars >= magicWands.getPrice())
+            int numero = 1;
+            Button btn;
+            foreach (Character character in listCharacters)
             {
-                button_addMagicWand.IsEnabled = true;
-            }
-            else
-            {
-                button_addMagicWand.IsEnabled = false;
-            }
-            if (stars >= fairies.getPrice())
-            {
-                button_addFairy.IsEnabled = true;
-            }
-            else
-            {
-                button_addFairy.IsEnabled = false;
-            }
-            if (stars >= farms.getPrice())
-            {
-                button_addFarm.IsEnabled = true;
-            }
-            else
-            {
-                button_addFarm.IsEnabled = false;
+                btn = FindName("button_addCharacter_" + numero) as Button;
+                if (stars >= character.getPrice())
+                {
+                    btn.IsEnabled = true;
+                }
+                else
+                {
+                    btn.IsEnabled = false;
+                }
+                numero++;
             }
         }
 
@@ -100,65 +107,42 @@ namespace FeeClicker
             label_starsCounter.Content = stars;
         }
 
-        private void addMagicWand(object sender, RoutedEventArgs e)
+        private void addCharacter(object sender, RoutedEventArgs e)
         {
-            stars -= magicWands.getPrice();
-            magicWands.addOne();
-            if (stars >= magicWands.getPrice())
-            {
-                button_addMagicWand.IsEnabled = true;
-            }
-            else
-            {
-                button_addMagicWand.IsEnabled = false;
-            }
-            label_magicWands.Content = magicWands.getNumber();
-            label_magicWandPrice.Content = magicWands.getPrice();
-            label_starsCounter.Content = stars;
-            updateStarsPerSecond();
-        }
+            Button button = sender as Button;
+            String name = button.GetValue(NameProperty) as String;
+            int numero = int.Parse(name.Split('_')[2]);
+            int index = numero - 1;
 
-        private void addFairy(object sender, RoutedEventArgs e)
-        {
-            stars -= fairies.getPrice();
-            fairies.addOne();
-            if (stars >= fairies.getPrice())
-            {
-                button_addFairy.IsEnabled = true;
-            }
-            else
-            {
-                button_addFairy.IsEnabled = false;
-            }
-            label_fairies.Content = fairies.getNumber();
-            label_fairyPrice.Content = fairies.getPrice();
-            label_starsCounter.Content = stars;
-            updateStarsPerSecond();
-        }
+            stars -= listCharacters[index].getPrice();
+            listCharacters[index].addOne();
 
-        private void addFarm(object sender, RoutedEventArgs e)
-        {
-            stars -= farms.getPrice();
-            farms.addOne();
-            if (stars >= farms.getPrice())
+            Button btn = sender as Button;
+            btn = FindName("button_addCharacter_" + numero) as Button;
+            if (stars >= listCharacters[index].getPrice())
             {
-                button_addFarm.IsEnabled = true;
+                btn.IsEnabled = true;
             }
             else
             {
-                button_addFarm.IsEnabled = false;
+                btn.IsEnabled = false;
             }
-            label_farms.Content = farms.getNumber();
-            label_farmPrice.Content = farms.getPrice();
+            Label lbl = FindName("label_character_" + numero) as Label;
+            lbl.Content = listCharacters[index].getNumber();
+            lbl = FindName("label_characterPrice_" + numero) as Label;
+            lbl.Content = listCharacters[index].getPrice();
+            
             label_starsCounter.Content = stars;
             updateStarsPerSecond();
         }
 
         private void updateStarsPerSecond()
         {
-            starsPerSecond = magicWands.getStarsPerSecond();
-            starsPerSecond += fairies.getStarsPerSecond();
-            starsPerSecond += farms.getStarsPerSecond();
+            starsPerSecond = 0;
+            foreach (Character character in listCharacters)
+            {
+                starsPerSecond += character.getStarsPerSecond();
+            }
             label_starsPerSecondCounter.Content = starsPerSecond;
         }
 
@@ -267,9 +251,11 @@ namespace FeeClicker
 
         private void saveAndQuit(object sender, RoutedEventArgs e)
         {
+            /*
             ecritureFichier("./savedGame/stars.txt", Convert.ToString(stars));
             ecritureFichier("./savedGame/fairies.txt", Convert.ToString(fairies.getNumber()));
             ecritureFichier("./savedGame/fairiesBonus.txt", Convert.ToString(fairies.getMultiplier()));
+            */
             this.Close();
         }
     }
