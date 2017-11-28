@@ -59,14 +59,5 @@ namespace FeeClicker.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à 293.
-        /// </summary>
-        internal static string stars {
-            get {
-                return ResourceManager.GetString("stars", resourceCulture);
-            }
-        }
     }
 }

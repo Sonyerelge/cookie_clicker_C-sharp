@@ -51,6 +51,11 @@ namespace FeeClicker
             this.number = number;
         }
 
+        public void setPrice(uint price)
+        {
+            this.price = price;
+        }
+
         public UInt64 getStarsPerSecond()
         {
             return this.number * this.coefficient;

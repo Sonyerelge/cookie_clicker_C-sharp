@@ -38,7 +38,7 @@
         <Button x:Name="button_addCharacter_2" Content="+" HorizontalAlignment="Left" Margin="616,290,0,0" VerticalAlignment="Top" Width="30" Height="42" Click="addCharacter" Grid.Column="1" IsEnabled="False" Background="#FFDEADC5" FontSize="18"/>
         <Button x:Name="button_addCharacter_3" Content="+" HorizontalAlignment="Left" Margin="616,394,0,0" VerticalAlignment="Top" Width="30" Height="42" Click="addCharacter" Grid.Column="1" IsEnabled="False" Background="#FFDEADC5" FontSize="18"/>
         <Label x:Name="label_character" Content="Personnage" HorizontalAlignment="Left" Margin="581,139,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDEADC5" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold" Width="264" Grid.ColumnSpan="2"/>
-        <Label x:Name="label_characterPrice" Content="prix" Grid.Column="1" HorizontalAlignment="Left" Margin="495,139,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDEADC5" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold" Width="62"/>
+        <Label x:Name="label_characterPrice" Content="Prix" Grid.Column="1" HorizontalAlignment="Left" Margin="495,139,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDEADC5" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold" Width="62"/>
         <Label x:Name="label_characterNumber" Content="Nombre" HorizontalAlignment="Left" Margin="315,139,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDEADC5" Grid.Column="1" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold" Width="94"/>
 
     </Grid>

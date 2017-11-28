@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeeClicker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" MaxWidth="800" MaxHeight="450">
+        Title="MainWindow" Height="450" Width="800" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" MaxWidth="800" MaxHeight="450" MinWidth="800" MinHeight="450" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
