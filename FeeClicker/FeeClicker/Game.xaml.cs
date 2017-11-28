@@ -20,10 +20,9 @@ namespace FeeClicker
         public Game(Boolean newGame)
         {
             InitializeComponent();
-
             listCharacters.Add(new Character("Baguette magique", 0, 1, 1, 20));
             listCharacters.Add(new Character("Fée", 0, 5, 1, 100));
-            listCharacters.Add(new Character("Ferme", 0, 20, 1, 500));
+            listCharacters.Add(new Character("Ferme de fée", 0, 20, 1, 500));
 
             /*
             if (newGame)
@@ -58,14 +57,14 @@ namespace FeeClicker
             Label lbl;
             foreach(Character character in listCharacters)
             {
-                btn = FindName("button_addCharacter_" + numero) as Button;
-                btn.Content = "Ajouter " + character.getName();
-
                 lbl = FindName("label_character_" + numero) as Label;
+                lbl.Content = character.getName() + " :";
+
+                lbl = FindName("label_characterNumber_" + numero) as Label;
                 lbl.Content = character.getNumber();
 
                 lbl = FindName("label_characterPrice_" + numero) as Label;
-                lbl.Content = character.getPrice();
+                lbl.Content = character.getPrice() + " poussières";
                 numero++;
             }
 
@@ -74,6 +73,12 @@ namespace FeeClicker
             timer1second.Tick += addStarsPerSecond;
             timer1second.Tick += checkWhatWeCanBuy;
             timer1second.Start();
+        }
+
+        private void addStar(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            stars++;
+            label_starsCounter.Content = stars;
         }
 
         void addStarsPerSecond(object sender, EventArgs e)
@@ -101,36 +106,30 @@ namespace FeeClicker
             }
         }
 
-        private void addStar(object sender, RoutedEventArgs e)
-        {
-            stars++;
-            label_starsCounter.Content = stars;
-        }
 
         private void addCharacter(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
-            String name = button.GetValue(NameProperty) as String;
+            //on récupére le numéro du personnage (button_addCharacter_1  on prend le 1)
+            String name = button.GetValue(NameProperty) as String; 
             int numero = int.Parse(name.Split('_')[2]);
             int index = numero - 1;
 
             stars -= listCharacters[index].getPrice();
             listCharacters[index].addOne();
-
-            Button btn = sender as Button;
-            btn = FindName("button_addCharacter_" + numero) as Button;
+            
             if (stars >= listCharacters[index].getPrice())
             {
-                btn.IsEnabled = true;
+                button.IsEnabled = true;
             }
             else
             {
-                btn.IsEnabled = false;
+                button.IsEnabled = false;
             }
-            Label lbl = FindName("label_character_" + numero) as Label;
+            Label lbl = FindName("label_characterNumber_" + numero) as Label;
             lbl.Content = listCharacters[index].getNumber();
             lbl = FindName("label_characterPrice_" + numero) as Label;
-            lbl.Content = listCharacters[index].getPrice();
+            lbl.Content = listCharacters[index].getPrice() + " poussières";
             
             label_starsCounter.Content = stars;
             updateStarsPerSecond();
@@ -258,5 +257,7 @@ namespace FeeClicker
             */
             this.Close();
         }
+
+
     }
 }
