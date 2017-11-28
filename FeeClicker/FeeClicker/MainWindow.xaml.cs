@@ -46,7 +46,6 @@ namespace FeeClicker
                 button_startSavedGame.Visibility = System.Windows.Visibility.Visible;
                 button_startNewGame.Visibility = System.Windows.Visibility.Visible;
             }
-
         }
     }
 }

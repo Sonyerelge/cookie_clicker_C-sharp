@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -24,30 +23,41 @@ namespace FeeClicker
             listCharacters.Add(new Character("Fée", 0, 5, 1, 100));
             listCharacters.Add(new Character("Ferme de fée", 0, 20, 1, 500));
 
-            /*
+            
             if (newGame)
             {
                 //Vider les fichiers textes
-                ecritureFichier("./savedGame/stars.txt", "0");
+                /*ecritureFichier("./savedGame/stars.txt", "0");
                 ecritureFichier("./savedGame/fairies.txt", "0");
-                ecritureFichier("./savedGame/fairiesBonus.txt", "1");
+                ecritureFichier("./savedGame/fairiesBonus.txt", "1");*/
+                String svgStars = lectureFichierSvg("./ressources/stars.txt");
+                if (svgStars != null)
+                    stars = Convert.ToUInt64(svgStars);
             }
             else
             {
                 //Récupérer les valeurs des fichiers textes
-                String svgStars = lectureFichierSvg("./savedGame/stars.txt");
+                /*String svgStars = lectureFichierSvg(Properties.Resources.stars);
                 if (svgStars != null)
-                    stars = Convert.ToUInt64(svgStars);
+                    stars = Convert.ToUInt64(svgStars);*/
 
-                String svgFairies = lectureFichierSvg("./savedGame/fairies.txt");
+                //File.WriteAllText(Properties.Resources.stars, "abcfsdfdsf");
+                //File.WriteAllText(Properties.Resources.stars, "abc\nbcd");
+
+                
+                String tutu = Properties.Resources.stars;
+                String [] toto = tutu.Split('\n');
+                label_stars.Content = toto[0];
+
+
+                /*String svgFairies = lectureFichierSvg("./savedGame/fairies.txt");
                 if (svgFairies != null)
                     fairies.setNumber(Convert.ToUInt32(svgFairies));
 
                 starsPerSecond = magicWands.getStarsPerSecond();
                 starsPerSecond += fairies.getStarsPerSecond();
-                starsPerSecond += farms.getStarsPerSecond();
+                starsPerSecond += farms.getStarsPerSecond();*/
             }
-            */
 
             label_starsCounter.Content = stars;
             label_starsPerSecondCounter.Content = starsPerSecond;
