@@ -7,16 +7,14 @@ namespace FeeClicker
         private String name;
         private uint number;
         private uint coefficient;
-        private uint multiplier;
         private ulong defaultPrice;
         private ulong price;
 
-        public Character(String name, uint number, uint coefficient, uint multiplier, ulong price)
+        public Character(String name, uint number, uint coefficient, ulong price)
         {
             this.name = name;
             this.number = number;
             this.coefficient = coefficient;
-            this.multiplier = multiplier;
             this.price = price;
             this.defaultPrice = price;
         }
@@ -36,11 +34,6 @@ namespace FeeClicker
             return this.coefficient;
         }
 
-        public uint getMultiplier()
-        {
-            return this.multiplier;
-        }
-
         public UInt64 getPrice()
         {
             return this.price;
@@ -58,13 +51,13 @@ namespace FeeClicker
 
         public UInt64 getStarsPerSecond()
         {
-            return this.number * this.coefficient;
+            return number * coefficient;
         }
 
         public void addOne()
         {
-            this.number++;
-            this.price += 1;
+            number++;
+            price = Convert.ToUInt64(price * 1.3);
         }
     }
 }

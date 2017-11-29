@@ -27,9 +27,9 @@ namespace FeeClicker
 
         private void Initialization(Boolean newGame)
         {
-            listCharacters.Add(new Character("Baguette magique", 0, 1, 1, 20));
-            listCharacters.Add(new Character("Fée", 0, 5, 1, 100));
-            listCharacters.Add(new Character("Ferme de fée", 0, 20, 1, 500));
+            listCharacters.Add(new Character("Baguette magique", 0, 1, 20));
+            listCharacters.Add(new Character("Fée", 0, 5, 100));
+            listCharacters.Add(new Character("Ferme de fée", 0, 20, 500));
 
             if (newGame)
             {
