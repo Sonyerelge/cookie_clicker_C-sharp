@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Windows;
 
 namespace FeeClicker
 {
@@ -10,6 +12,14 @@ namespace FeeClicker
         public MainWindow()
         {
             InitializeComponent();
+            Initialization();
+        }
+
+        private void Initialization()
+        {
+            // On regarde si le fichier de sauvegarde existe
+            if (File.Exists("savedVariables.txt"))
+                button_startSavedGame.IsEnabled = true;
         }
 
         private void startSavedGame(object sender, RoutedEventArgs e)
@@ -23,11 +33,14 @@ namespace FeeClicker
 
         private void startNewGame(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("Hello !!");
             Game game = new Game(true);
             this.Hide();
             game.Owner = this;
             game.ShowDialog();
             this.Show();
+            Console.WriteLine("Coucou !!");
+            Initialization();
         }
 
         private void showOrHideCredit(object sender, RoutedEventArgs e)
@@ -35,16 +48,16 @@ namespace FeeClicker
             if (button_credits.Content.ToString() == "Crédits")
             {
                 button_credits.Content = "Retour au menu";
-                label_credits.Visibility = System.Windows.Visibility.Visible;
-                button_startSavedGame.Visibility = System.Windows.Visibility.Hidden;
-                button_startNewGame.Visibility = System.Windows.Visibility.Hidden;
+                label_credits.Visibility = Visibility.Visible;
+                button_startSavedGame.Visibility = Visibility.Hidden;
+                button_startNewGame.Visibility = Visibility.Hidden;
             }
             else
             {
                 button_credits.Content = "Crédits";
-                label_credits.Visibility = System.Windows.Visibility.Hidden;
-                button_startSavedGame.Visibility = System.Windows.Visibility.Visible;
-                button_startNewGame.Visibility = System.Windows.Visibility.Visible;
+                label_credits.Visibility = Visibility.Hidden;
+                button_startSavedGame.Visibility = Visibility.Visible;
+                button_startNewGame.Visibility = Visibility.Visible;
             }
         }
     }

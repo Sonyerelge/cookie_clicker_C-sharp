@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,10 +16,17 @@ namespace FeeClicker
         private ulong stars = 0;
         private ulong starsPerSecond = 0;
         private List<Character> listCharacters= new List<Character>();
+        private bool savedFlag = false;
+        DispatcherTimer timer;
 
         public Game(Boolean newGame)
         {
             InitializeComponent();
+            Initialization(newGame);
+        }
+
+        private void Initialization(Boolean newGame)
+        {
             listCharacters.Add(new Character("Baguette magique", 0, 1, 1, 20));
             listCharacters.Add(new Character("Fée", 0, 5, 1, 100));
             listCharacters.Add(new Character("Ferme de fée", 0, 20, 1, 500));
@@ -30,7 +38,7 @@ namespace FeeClicker
             }
             else
             {
-                // On récupère les valeurs du fichier de sauvegarde
+                // On regarde si le fichier de sauvegarde existe
                 if (!File.Exists("savedVariables.txt"))
                     fillSavedVariablesFile(); // On vide le fichier de sauvegarde
 
@@ -57,7 +65,7 @@ namespace FeeClicker
 
             int numero = 1;
             Label lbl;
-            foreach(Character character in listCharacters)
+            foreach (Character character in listCharacters)
             {
                 lbl = FindName("label_character_" + numero) as Label;
                 lbl.Content = character.getName() + " :";
@@ -70,11 +78,11 @@ namespace FeeClicker
                 numero++;
             }
 
-            DispatcherTimer timer1second = new DispatcherTimer();
-            timer1second.Interval = TimeSpan.FromSeconds(1);
-            timer1second.Tick += addStarsPerSecond;
-            timer1second.Tick += checkWhatWeCanBuy;
-            timer1second.Start();
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += addStarsPerSecond;
+            timer.Tick += checkWhatWeCanBuy;
+            timer.Start();
         }
 
         private void addStar(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -83,13 +91,13 @@ namespace FeeClicker
             label_starsCounter.Content = stars;
         }
 
-        void addStarsPerSecond(object sender, EventArgs e)
+        private void addStarsPerSecond(object sender, EventArgs e)
         {
             stars += starsPerSecond;
             label_starsCounter.Content = stars;
         }
 
-        void checkWhatWeCanBuy(object sender, EventArgs e)
+        private void checkWhatWeCanBuy(object sender, EventArgs e)
         {
             int numero = 1;
             Button btn;
@@ -107,7 +115,6 @@ namespace FeeClicker
                 numero++;
             }
         }
-
 
         private void addCharacter(object sender, RoutedEventArgs e)
         {
@@ -160,13 +167,35 @@ namespace FeeClicker
             File.WriteAllLines("savedVariables.txt", tab);
         }
 
+        private void pause(object sender, RoutedEventArgs e)
+        {
+            timer.Stop();
+            MessageBox.Show("Appuyer sur le bouton pour reprendre le jeu !", "Jeu en pause");
+            timer.Start();
+        }
+
         private void saveAndQuit(object sender, RoutedEventArgs e)
         {
             // On remplit le fichier de sauvegarde
             fillSavedVariablesFile();
+            this.savedFlag = true;
             this.Close();
         }
 
-
+        private void windowClosing(object sender, CancelEventArgs e)
+        {
+            // On arrete le timer qui comtabilise les points
+            timer.Stop();
+            if (!this.savedFlag)
+            {
+                // Si l'utilisateur n'a pas cliquer sur le boutton "Sauvegarder & quitter", on lui demande s'il souhaite sauvegarder sa partie
+                string msg = "Voulez-vous sauvegarder avant de quitter la partie ?";
+                MessageBoxResult result = MessageBox.Show(msg, "Etes-vous sur de vouloir quitter ?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    fillSavedVariablesFile();
+                }
+            }
+        }
     }
 }

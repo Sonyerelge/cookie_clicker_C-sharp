@@ -14,11 +14,11 @@
             <ImageBrush ImageSource="Resources/background_star.png"/>
         </Grid.Background>
         <Label x:Name="label_title" Content="Fée clicker" HorizontalAlignment="Left" Margin="201,-2,0,0" VerticalAlignment="Top" Height="120" Width="400" FontSize="85" Background="{x:Null}" Foreground="#FFDEADC5" FontFamily="Yu Gothic Light"/>
-        <Button x:Name="button_startSavedGame" Content="Continuer partie" VerticalAlignment="Center" Height="63" Click="startSavedGame" HorizontalAlignment="Center" Width="153" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="327,150,312,206" Background="#FFDEADC5" Foreground="Black" OpacityMask="#FFB20505"/>
+        <Button x:Name="button_startSavedGame" Content="Continuer partie" VerticalAlignment="Center" Height="63" Click="startSavedGame" HorizontalAlignment="Center" Width="153" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="327,150,312,206" Background="#FFDEADC5" Foreground="Black" OpacityMask="#FFB20505" IsEnabled="False"/>
         <Button x:Name="button_startNewGame" Content="Nouvelle partie" HorizontalAlignment="Left" Margin="327,252,0,0" VerticalAlignment="Top" Width="153" Height="63" Click="startNewGame" Background="#FFDEADC5" BorderBrush="#00000000" Foreground="Black"/>
         <Button x:Name="button_credits" Content="Crédits" HorizontalAlignment="Left" Margin="639,333,0,0" VerticalAlignment="Top" Width="123" Height="47" Background="#FFDEADC5" Click="showOrHideCredit" Foreground="Black"/>
         <Image x:Name="image_LogoFee" HorizontalAlignment="Left" Height="100" Margin="10,309,0,0" VerticalAlignment="Top" Width="76" Source="Resources/logoFée.png"/>
-        <Label x:Name="label_credits" Content="Crédits : &#xD;&#xA;&#xD;&#xA;Constant Bouquet&#xD;&#xA;Quentin Marescaux&#xD;&#xA;Geoffrey Sautieres&#xD;&#xA;&#xD;&#xA;Etudiants 3ème année Centrale Lille - IG2I&#xD;&#xA;&#xD;&#xA;Pour un chalenge Let's Dev&#xD;&#xA;&#xD;&#xA;2017" HorizontalAlignment="Left" Margin="164,123,0,0" VerticalAlignment="Top" Height="281" Width="490" Background="{x:Null}" Foreground="#FF5F153A" FontSize="20" Visibility="Hidden"/>
+        <Label x:Name="label_credits" Content="Crédits : &#xD;&#xA;&#xD;&#xA;Constant Bouquet&#xD;&#xA;Quentin Marescaux&#xD;&#xA;Geoffrey Sautieres&#xD;&#xA;&#xD;&#xA;Etudiants 3ème année Centrale Lille - IG2I&#xD;&#xA;&#xD;&#xA;Pour un chalenge Let's Dev&#xD;&#xA;&#xD;&#xA;2017" HorizontalAlignment="Left" Margin="164,123,0,0" VerticalAlignment="Top" Height="281" Width="490" Background="{x:Null}" Foreground="#FFDEADC5" FontSize="20" Visibility="Hidden"/>
 
     </Grid>
 </Window>

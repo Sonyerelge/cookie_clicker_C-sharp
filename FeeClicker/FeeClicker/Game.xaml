@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeeClicker"
         mc:Ignorable="d"
+        Closing="windowClosing"
         Title="Féé clicker" Height="720" Width="1280" Background="{x:Null}" MinWidth="1280" MinHeight="720" Margin="0" ResizeMode="NoResize" ScrollViewer.VerticalScrollBarVisibility="Disabled" MaxWidth="1280" MaxHeight="720" HorizontalAlignment="Left" VerticalAlignment="Top" Icon="Resources/star.png" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
@@ -22,7 +23,7 @@
         <Label x:Name="label_characterNumber_2" Content="0" HorizontalAlignment="Left" Margin="279,297,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDEADC5" Grid.Column="1" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold" Width="94"/>
         <Label x:Name="label_starsPerSecond" Content="Poussière par seconde :" HorizontalAlignment="Left" Margin="90,178,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDEADC5" FontWeight="Bold" FontSize="20"/>
         <Label x:Name="label_starsPerSecondCounter" Content="0" HorizontalAlignment="Left" Margin="322,178,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDEADC5" Width="232" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold"/>
-        <Button x:Name="button_saveAndQuit" Content="Save &amp; quit" HorizontalAlignment="Left" Margin="526,41,0,0" VerticalAlignment="Top" Width="84" Height="35" Click="saveAndQuit" Grid.Column="1" Foreground="Black" Background="#FFDEADC5"/>
+        <Button x:Name="button_saveAndQuit" Content="Sauvegarder &amp; quitter" HorizontalAlignment="Left" Margin="479.333,41,0,0" VerticalAlignment="Top" Width="131" Height="35" Click="saveAndQuit" Grid.Column="1" Foreground="Black" Background="#FFDEADC5"/>
         <Label x:Name="label_stars" Content="Poussière d'étoile :" HorizontalAlignment="Left" Margin="90,136,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDEADC5" FontWeight="Bold" FontSize="20"/>
         <Label x:Name="label_title" Content="Fée clicker" HorizontalAlignment="Left" Margin="436,7,0,0" VerticalAlignment="Top" Height="106" Width="347" FontSize="72" Background="{x:Null}" Foreground="#FFDEADC5" FontFamily="Yu Gothic Light" Grid.ColumnSpan="2" FontWeight="Bold"/>
         <Label x:Name="label_characterNumber_1" Content="0" HorizontalAlignment="Left" Margin="279,185,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDEADC5" Grid.Column="1" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold" Width="94"/>
@@ -40,6 +41,7 @@
         <Label x:Name="label_character" Content="Personnage" HorizontalAlignment="Left" Margin="581,139,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDEADC5" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold" Width="264" Grid.ColumnSpan="2"/>
         <Label x:Name="label_characterPrice" Content="Prix" Grid.Column="1" HorizontalAlignment="Left" Margin="495,139,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDEADC5" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold" Width="62"/>
         <Label x:Name="label_characterNumber" Content="Nombre" HorizontalAlignment="Left" Margin="315,139,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDEADC5" Grid.Column="1" HorizontalContentAlignment="Right" FontSize="18" FontWeight="Bold" Width="94"/>
+        <Button x:Name="button_pause" Content="Pause" HorizontalAlignment="Left" Margin="350.333,41,0,0" VerticalAlignment="Top" Width="84" Height="35" Click="pause" Grid.Column="1" Foreground="Black" Background="#FFDEADC5"/>
 
     </Grid>
 </Window>
