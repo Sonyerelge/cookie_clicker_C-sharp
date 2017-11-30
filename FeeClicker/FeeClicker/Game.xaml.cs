@@ -60,8 +60,8 @@ namespace FeeClicker
                 }
             }
 
-            label_starsCounter.Content = stars;
-            label_starsPerSecondCounter.Content = starsPerSecond;
+            label_starsCounter.Content = getPriceLabel(stars);
+            label_starsPerSecondCounter.Content = getPriceLabel(starsPerSecond);
 
             int numero = 1;
             Label lbl;
@@ -71,10 +71,10 @@ namespace FeeClicker
                 lbl.Content = character.getName() + " :";
 
                 lbl = FindName("label_characterNumber_" + numero) as Label;
-                lbl.Content = character.getNumber();
+                lbl.Content = getPriceLabel(character.getNumber());
 
                 lbl = FindName("label_characterPrice_" + numero) as Label;
-                lbl.Content = character.getPrice() + " poussières";
+                lbl.Content = getPriceLabel(character.getPrice()) + " pe";
                 numero++;
             }
 
@@ -88,13 +88,13 @@ namespace FeeClicker
         private void addStar(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             stars++;
-            label_starsCounter.Content = stars;
+            label_starsCounter.Content = getPriceLabel(stars);
         }
 
         private void addStarsPerSecond(object sender, EventArgs e)
         {
             stars += starsPerSecond;
-            label_starsCounter.Content = stars;
+            label_starsCounter.Content = getPriceLabel(stars);
         }
 
         private void checkWhatWeCanBuy(object sender, EventArgs e)
@@ -138,10 +138,29 @@ namespace FeeClicker
             Label lbl = FindName("label_characterNumber_" + numero) as Label;
             lbl.Content = listCharacters[index].getNumber();
             lbl = FindName("label_characterPrice_" + numero) as Label;
-            lbl.Content = listCharacters[index].getPrice() + " poussières";
+            lbl.Content = getPriceLabel(listCharacters[index].getPrice()) + " pe";
             
-            label_starsCounter.Content = stars;
+            label_starsCounter.Content = getPriceLabel(stars);
             updateStarsPerSecond();
+        }
+
+        private String getPriceLabel(UInt64 price)
+        {
+            if (price > 999)
+            {
+                UInt64 unites = price % 1000;
+                if (price < 1000000)
+                {
+                    return (price - unites)/1000 + " " + unites.ToString("D3");
+                }
+                else
+                {
+                    UInt64 miliers = (price % 1000000 - unites)/1000;
+                    return (price - miliers)/1000000 + "," + miliers.ToString("D3") + " millions";
+                }
+            }  
+            else
+                return "" + price;
         }
 
         private void updateStarsPerSecond()

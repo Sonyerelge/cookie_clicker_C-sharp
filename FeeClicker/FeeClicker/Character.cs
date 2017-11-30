@@ -57,7 +57,7 @@ namespace FeeClicker
         public void addOne()
         {
             number++;
-            price = Convert.ToUInt64(price * 1.3);
+            price = Convert.ToUInt64(price * 1.15);
         }
     }
 }
