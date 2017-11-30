@@ -16,8 +16,9 @@ namespace FeeClicker
         private ulong stars = 0;
         private ulong starsPerSecond = 0;
         private List<Character> listCharacters= new List<Character>();
+        private int NB_PERSONNAGES = 6;
         private bool savedFlag = false;
-        DispatcherTimer timer;
+        private DispatcherTimer timer;
 
         public Game(Boolean newGame)
         {
@@ -27,9 +28,12 @@ namespace FeeClicker
 
         private void Initialization(Boolean newGame)
         {
-            listCharacters.Add(new Character("Baguette magique", 0, 1, 20));
-            listCharacters.Add(new Character("Fée", 0, 5, 100));
-            listCharacters.Add(new Character("Ferme de fée", 0, 20, 500));
+            listCharacters.Add(new Character("Baguettes magiques", 0, 1, 20));
+            listCharacters.Add(new Character("Fées", 0, 5, 100));
+            listCharacters.Add(new Character("Fermes de fées", 0, 20, 500));
+            listCharacters.Add(new Character("Féeseuses", 0, 100, 5000));
+            listCharacters.Add(new Character("Usines à fées", 0, 500, 20000));
+            listCharacters.Add(new Character("Reines fées", 0, 1000, 100000));
 
             if (newGame)
             {
@@ -156,7 +160,7 @@ namespace FeeClicker
 
         private void fillSavedVariablesFile()
         {
-            String[] tab = new String[4];
+            String[] tab = new String[NB_PERSONNAGES+ 1];
             tab[0] = stars.ToString();
             int i = 1;
             foreach (Character character in listCharacters)
