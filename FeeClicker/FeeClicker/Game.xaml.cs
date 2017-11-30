@@ -79,6 +79,10 @@ namespace FeeClicker
 
                 lbl = FindName("label_characterPrice_" + numero) as Label;
                 lbl.Content = getPriceLabel(character.getPrice()) + " pe";
+
+                lbl = FindName("label_characterCoefficient_" + numero) as Label;
+                lbl.Content = getPriceLabel(character.getCoefficient()) + " pe/s";
+
                 numero++;
             }
 
@@ -174,7 +178,7 @@ namespace FeeClicker
             {
                 starsPerSecond += character.getStarsPerSecond();
             }
-            label_starsPerSecondCounter.Content = starsPerSecond;
+            label_starsPerSecondCounter.Content = getPriceLabel(starsPerSecond);
         }
 
         private void fillSavedVariablesFile()
