@@ -7,7 +7,6 @@ namespace FeeClicker
         private String name;
         private uint number;
         private uint coefficient;
-        private ulong defaultPrice;
         private ulong price;
 
         public Character(String name, uint number, uint coefficient, ulong price)
@@ -16,7 +15,6 @@ namespace FeeClicker
             this.number = number;
             this.coefficient = coefficient;
             this.price = price;
-            this.defaultPrice = price;
         }
         
         public String getName()

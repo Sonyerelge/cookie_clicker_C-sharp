@@ -217,7 +217,7 @@ namespace FeeClicker
             {
                 // Si l'utilisateur n'a pas cliquer sur le boutton "Sauvegarder & quitter", on lui demande s'il souhaite sauvegarder sa partie
                 string msg = "Voulez-vous sauvegarder avant de quitter la partie ?";
-                MessageBoxResult result = MessageBox.Show(msg, "Etes-vous sur de vouloir quitter ?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                MessageBoxResult result = MessageBox.Show(msg, "Etes-vous sur de vouloir quitter sans sauvegarder ?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
                     fillSavedVariablesFile();
